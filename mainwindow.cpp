@@ -5,10 +5,10 @@
 static QPushButton *button_number;
 static QString button_name;
 static QString Set_button_name;
-static QPushButton * current_button;
+
 static int Checked_OK = 0;
 static int First_time_run = 0;
-static QWidget *current_focus;
+
 static QPushButton *button_location;
 static QPushButton *button_group[9];
 static int location = 0;
@@ -16,7 +16,7 @@ static int which_button = 0;
 static QString Button_color = "";
 static QString Background_color[9];
 static QString Color = "";
-static int start_MainWindow = 0;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

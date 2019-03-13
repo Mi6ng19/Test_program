@@ -3,5 +3,6 @@
     <qresource prefix="/">
         <file>images/logo2.png</file>
         <file>images/logo2.bmp</file>
+        <file>Remarks/Remarks.txt</file>
     </qresource>
 </RCC>

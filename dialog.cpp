@@ -98,6 +98,7 @@ void Dialog::keyPressEvent(QKeyEvent *keyev)
 
     if(keyev->type()==QKeyEvent::KeyPress)
     {
+        
         if(Window.toInt() == 8)
         {
              process->close();
@@ -718,11 +719,14 @@ void Dialog::window_6()
     text = "     磁盘空间检测";
     text += "\n总共存储空间：" + QString::number(disk_info[1],'f',2) + " G";
     text += "\n剩余可用空间：" + QString::number(disk_info[0],'f',2) + " G";
-    TF_exist = 1;
+
     if(TF_exist == 1)
     {
         text += "\nTF卡总共存储空间：" + QString::number(disk_info[3],'f',2) + " G";
         text += "\nTF卡剩余可用空间：" + QString::number(disk_info[2],'f',2) + " G";
+    }
+    else {
+        text += "\n未检测到TF卡";
     }
 
     ui->label->setText(text);
@@ -730,7 +734,6 @@ void Dialog::window_6()
 
     if(Slider_control == 0)
     {
-
       //设置水平方向滑动
       pSlider->setOrientation(Qt::Horizontal);
       //设置滑动条控件的最小值
@@ -805,7 +808,6 @@ void Dialog::window_6()
       pSlider->show();
       pSlider->raise();
 
-      Slider_control = 1;
       // 微调框
       pSpinBox->setMinimum(0);  // 最小值
       pSpinBox->setMaximum(20);  // 最大值
@@ -824,6 +826,8 @@ void Dialog::window_6()
       //设置label 显示位置和大小
       ui->label_2->setGeometry(90,190,80, 40);
       ui->label_2->setText("背光控制");
+
+      Slider_control = 1;
     }
 }
 
@@ -842,11 +846,13 @@ void Dialog::window_7()
 #endif
     }
 
+#ifndef Test
     if(exit_window7 == 1)
     {
         ui->pushButton->setFocus();
         exit_window7 = 0;
     }
+#endif
 }
 
 //摄像头检测
@@ -854,18 +860,44 @@ void Dialog::window_8()
 {
 
 #ifdef Test
-        //do nothing
+    text = "[   76.236272] [BHCnav]--> ov5640_probe\n\
+            [   76.239953] 1-003c supply DOVDD not found, using dummy regulator\n\
+            [   76.291495] 1-003c supply DVDD not found, using dummy regulator\n\
+            [   76.316439] 1-003c supply AVDD not found, using dummy regulator\n\
+            [   76.415176] ov5640_read_reg:write reg error:reg=300a\n\
+            [   76.420153] camera ov5640 is not found";
+     if(text.contains("camera ov5640 is not found",Qt::CaseSensitive) == true)
+    {
+        ui->label_2->setGeometry(10,100,240,80);
+        ui->label_2->setText("摄像头未找到");
+        ui->label_2->show();
+    }
 #else
 
     if(Camera_control == 0)
     {
-        system("sh /test_app/camera_ko/camera_install.sh");
-        qDebug("camera_test");
-         Camera_control = 1;
+        Get_Info("sh /test_app/camera_ko/camera_install.sh","");
+
+       if(text.contains("camera ov5640 is not found",Qt::CaseSensitive) == true)
+       {
+           ui->label_2->setGeometry(10,100,240,80);
+           ui->label_2->setText("摄像头未找到");
+           ui->label_2->show();
+           Camera_control = -1;
+       }
+        else
+        {
+           qDebug("camera_test");
+           Camera_control = 1;
+        }
     }
 
-    //触发刷新
-    ui->label->setText(" ");
+    else if(Camera_control = 1)
+    {
+        //触发刷新
+        ui->label->setText(" ");
+    }
+
 #endif
 }
 

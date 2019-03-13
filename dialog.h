@@ -31,6 +31,7 @@ extern "C"{
 #include <QSlider>
 #include <QSpinBox>
 #include <iostream>
+
 //#define Test
 
 
@@ -128,7 +129,9 @@ private slots:
 
 private:
     Ui::Dialog *ui;
+#ifndef Test
     SatelliteWidget *pSatelliteWidget;
+#endif
 
 signals:
     void setui();
