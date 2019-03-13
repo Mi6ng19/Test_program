@@ -1,0 +1,10 @@
+prefix=/home/zeng/MYD-Y6ULX
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: tslib
+Description: Touchscreen Access Library
+Version: 1.18+
+Libs: -L${libdir} -lts
+Cflags: -I${includedir}
